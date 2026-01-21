@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document Verification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    body {
+        background:#f3f4f6;
+        font-family: system-ui, sans-serif;
+    }
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+
+<div class="max-w-md w-full bg-white shadow-xl rounded-xl border border-green-500">
+
+    <div class="bg-green-600 text-white text-center p-4 rounded-t-xl">
+        <h1 class="text-xl font-bold">AUTHENTIC & VERIFIED</h1>
+        <p class="text-sm opacity-90">Official Document Verification</p>
+    </div>
+
+    <div class="p-6 space-y-4 text-sm">
+
+        <div>
+            <span class="font-semibold text-gray-600">Reference No</span>
+            <div id="ref" class="text-lg font-bold text-black"></div>
+        </div>
+
+        <div>
+            <span class="font-semibold text-gray-600">Released By</span>
+            <div id="by" class="text-black"></div>
+        </div>
+
+        <div>
+            <span class="font-semibold text-gray-600">Date Issued</span>
+            <div id="date" class="text-black"></div>
+        </div>
+
+        <div class="pt-4 border-t text-center">
+            <span class="inline-flex items-center gap-2 text-green-700 font-semibold">
+                ✔ Status: Officially Released
+            </span>
+        </div>
+
+    </div>
+
+    <div class="bg-gray-100 text-center text-xs p-3 rounded-b-xl text-gray-500">
+        This verification page confirms the document was officially released.
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    document.getElementById('ref').textContent =
+        params.get('ref') || '—';
+
+    document.getElementById('by').textContent =
+        params.get('by') || '—';
+
+    document.getElementById('date').textContent =
+        params.get('date') || '—';
+</script>
+
+</body>
+</html>
