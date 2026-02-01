@@ -105,13 +105,50 @@
     byBox.textContent = by || '—';
     dateBox.textContent = date || '—';
 
-    // REQUIRE ALL fields
-    if (ref && by && date) {
-        statusBox.classList.remove('hidden');
-        noRecord.classList.add('hidden');
-    } else {
+    async function verifyWithGoogleSheet() {
+
+    // If any QR data missing → NO RECORD
+    if (!ref || !by || !date) {
         statusBox.classList.add('hidden');
         noRecord.classList.remove('hidden');
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "https://script.google.com/macros/s/AKfycbwsWWnhq8j-didVcklM3AEChXelE4u1cYBjP9NlZHkBTqK2ArZoGK9d7inhKdbhnJFJ/exec" +
+            `?ref=${encodeURIComponent(ref)}` +
+            `&by=${encodeURIComponent(by)}` +
+            `&date=${encodeURIComponent(date)}`
+        );
+
+        const result = await response.json();
+
+        if (result.status === "VALID") {
+            statusBox.classList.remove('hidden');
+            noRecord.classList.add('hidden');
+        } else {
+            statusBox.classList.add('hidden');
+            noRecord.classList.remove('hidden');
+        }
+
+    } catch (err) {
+        console.error("Verification error:", err);
+        statusBox.classList.add('hidden');
+        noRecord.classList.remove('hidden');
+    }
+}
+
+verifyWithGoogleSheet();
+
+
+    // REQUIRE ALL fields
+    //if (ref && by && date) {
+        //statusBox.classList.remove('hidden');
+       // noRecord.classList.add('hidden');
+   // } else {
+       // statusBox.classList.add('hidden');
+       // noRecord.classList.remove('hidden');
     }
 </script>
 
