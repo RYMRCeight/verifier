@@ -94,15 +94,24 @@
     const ref = params.get('ref');
     const by = params.get('by');
     const date = params.get('date');
+    let position = params.get('position') || '';
+
+    // Backward-compatible fallback for existing QR links without a position parameter.
+    if (!position && by && by.trim().toLowerCase() === 'reymarc jason t. tampos') {
+        position = 'Information Officer I';
+    }
 
     const refBox = document.getElementById('ref');
     const byBox = document.getElementById('by');
+    const positionBox = document.getElementById('position');
     const dateBox = document.getElementById('date');
     const statusBox = document.getElementById('statusBox');
     const noRecord = document.getElementById('noRecord');
 
     refBox.textContent = ref || '—';
     byBox.textContent = by || '—';
+    positionBox.textContent = position;
+    positionBox.classList.toggle('hidden', !position);
     dateBox.textContent = date || '—';
 
     // REQUIRE ALL fields
